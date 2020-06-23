@@ -12,6 +12,9 @@
 #include "ofMain.h"
 #include "errorManager.hpp"
 
+#define MSG_CLASSIC ( 1)
+#define MSG_COUNTDOWN ( 2)
+
 class messagePlayer{
     
 public:
@@ -21,15 +24,22 @@ public:
     void setFadeTime(int millis );
     void setFont(string f);
     void setMessage(string message);
+    void setMessageWithCountdown(string message, int count);
     void setSize(int size);
     void setFadeIn(int duration);
     void setFadeOut(int duration);
     int getAlpha();
+    bool getDisplay();
     void setAlpha(int a);
     void clear();
+    void update();
     void draw();
+    void drawAutoSizedMsg(string msg);
+    void drawUnderlinedMsg(string msg);
+    void drawCountdownMsg();
     
-    string currentMsg;
+    string currentMsg; // Final message
+    string msgToDisplay; // Message to display, including countdown
     bool isMessageOnScreen();
     bool isFading();
     
@@ -48,14 +58,17 @@ private:
     int fontSizeBig;
     int fontSizeMedium;
     int fontSizeSmall;
-    int maxMessageLenght;
     
     //Fade settings
-    bool display;
+    int displayMsg; //0 : nothing | MSG_CLASSIC | MSG_COUNTDOWN
     bool messageOnScreen;
     int fadeInDuration;
     int fadeOutDuration;
-    float timeToFade;
+    int messageDuration;
+    float timeMessageReceived;
+    float timeMessageClear;
+    int countdown; // in sec. Display countdown before printing message. Setted to 0 to display directly
+    int currentCountdown;
     int alpha;
     
     

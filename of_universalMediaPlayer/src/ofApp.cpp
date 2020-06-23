@@ -54,7 +54,8 @@ void ofApp::setup(){
 void ofApp::update(){
 
 	
-	if(video->getSize() == 0){
+	// CHECK USB KEY PRESENCE
+    if(video->getSize() == 0){
         //PLAYLIST IS EMPTY, SCAN
         if(usbKeyUse){
             scanVideoFiles();
@@ -71,7 +72,6 @@ void ofApp::update(){
 			//if playlist but not accessible : panic and close all
 			video->clearPlaylist();
 		}
-        
 
     }
     
@@ -98,12 +98,19 @@ void ofApp::update(){
         receiver.getNextMessage(m);
         processOscMessage(m);
    }
+    
+    //SEND VIDEO STATE
     auto currentVidState = video->getIsPlaying()?PLAYING:STOPPED; // purely asynchronous 
     if(notifiedVideoClientState!=currentVidState){
         oscsend->send("/videoPlayingState",(int)currentVidState);
         notifiedVideoClientState = currentVidState;
         
     }
+    
+    //MESSAGE UPDATE
+    message.update();
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -139,10 +146,10 @@ void ofApp::draw(){
     // DRAW IMAGE OF USB KEY
     if( usbKeyUse && video->getSize()==0){
         if(!usbKeyInserted){
-            imgNoUsbKey.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.3);
+            imgNoUsbKey.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.6);
         }
         else{
-            imgNoFile.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.3);
+            imgNoFile.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.6);
         }
     }
    
@@ -350,6 +357,12 @@ void ofApp::processOscMessage(ofxOscMessage m){
             if(splitted[1] == "message"){
                 string value = m.getArgAsString(0);
                 message.setMessage(value );
+                toPrint += "message";
+            }
+            if(splitted[1] == "countdown"){
+                string value = m.getArgAsString(0);
+                int count = m.getArgAsInt(1);
+                message.setMessageWithCountdown(value, count);
                 toPrint += "message";
             }
             if(splitted[1] == "clear"){
