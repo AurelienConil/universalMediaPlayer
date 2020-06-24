@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>osc.js Web Socket Demo</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class="container-fluid p-1  bg-dark text-white">
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h1>Film</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 ">
+                    <button class="btn btn-success " id="playlistbutton">
+                        <span class="glyphicon glyphicon-plus"></span>actualiser</button>
+                </div>
+                <div class="col-sm-10">
+                    <form><input type="range" id="timeline" class="form-control-range"></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div id="main">
+
+        <div id="list">
+
+        </div>
+
+    </div>
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/osc/dist/osc-browser.min.js"></script>
+    <script src="script.js"> </script>
+</body>
+
+</html>

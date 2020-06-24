@@ -1,0 +1,36 @@
+
+
+.topmenu{
+    display: grid;
+    display: block;
+    background-color: rgba(119, 156, 153, 0.1);
+
+}
+
+body{
+    height:100%; /* force the BODY element to match the height of the HTML element */
+}
+
+html{
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
+
+
+body{
+    background: url(th.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.divFilm{
+
+    opacity : 1;
+}
+
+.vertical-center {
+
+    display: flex;
+    align-items: center;
+  }
