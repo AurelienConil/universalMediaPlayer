@@ -55,6 +55,7 @@ public :
     //PLAYLIST FUNCTION
     int  addFile(string file);          //Return index of the added file
     void goNext();
+    void selectIndex(int i);
     void playIndex(int i);
     int getCurrentIndex();
     int getSize();
@@ -70,6 +71,9 @@ public :
     
     //ERROR MANAGER POINTER
     errorManager* error;
+    
+    //IMAGE PNG icon etc...
+     ofImage readyToPlay;
     
     //TIMECODE
     int actualFrame;

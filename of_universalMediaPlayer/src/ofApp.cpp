@@ -46,6 +46,10 @@ void ofApp::setup(){
     imgNoFile.load("nofile.png");
     
     
+    // Load the first file when usb key is inserted
+    readFirstFileAtStart = false;
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -186,6 +190,8 @@ void ofApp::keyPressed(int key){
             break;
         case 't': video->time.doPrintTimeCode = !video->time.doPrintTimeCode;
             break;
+        case ' ': video->play();
+        break;
 		default:
 			ofSetFullscreen(false);
             
@@ -228,6 +234,13 @@ void ofApp::processOscMessage(ofxOscMessage m){
 				video->playIndex(index);
 				toPrint += "play index";
 			}
+            
+            //PLAY INDEX
+            if (splitted[1] == "selectIndex") {
+                int index = m.getArgAsInt(0);
+                video->selectIndex(index);
+                toPrint += "select index";
+            }
             
             // STOP
             if(splitted[1] == "stop"){
@@ -490,7 +503,7 @@ void ofApp::scanVideoFiles(){
 			folderKey.listDir();
 			for (int i = 0; i < folderKey.listDir(); i++) {
 				cout << "FILE : " + folderKey.getPath(i) + "\n";
-				if (i == 0) {
+				if (i == 0 && readFirstFileAtStart) {
 					video->loadFile(folderKey.getPath(i));
 				}
 				else {
@@ -588,12 +601,14 @@ string ofApp::scanUsbKeyUnix() {
 		for (int i = 0; i < folder.size(); i++) {
 			cout << "USB NAME : " + folder.getPath(i) + "\n";
 			name = folder.getPath(i);
-			// >1 to avoid "/" folder is osx
-			if (name.size() > 1) {
+			// >rootDir.size() + 2 to avoid "/" folder is osx
+            
+			if (name.size() > (rootDir.size() + 2)) {
 				usbKeyName = name;
 				isFolderExist = true;
 				break;
 			}
+            
 		}
 	}
 

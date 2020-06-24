@@ -33,7 +33,7 @@ void vidPlayer::init(){
     doPrintFPS = false;
     doPrintOMXUse = false;
     doPrintFrame = false;
-    autoNext = true;
+    autoNext = false;
     
     //PAUSE
     pauseOnMessage = false;
@@ -62,6 +62,9 @@ void vidPlayer::init(){
     //TIMECODE
     actualFrame = 0;
     time = timeCode();
+    
+    //IMAGES
+    readyToPlay.load("readytoplay.png");
     
 }
 
@@ -151,11 +154,11 @@ void vidPlayer::draw( int darkPercentage){
             ofSetColor(255);
             ofTranslate ( 30, ofGetHeight()-120);
             int st = 0;
-            for(auto & c:"Radiologic"){
-                ofDrawBitmapString(ofToString("_"),0,st);
-                st+=12;
+            if(playlistIndex>=0 && playlistIndex<playlist.size()){
+                readyToPlay.draw(0.5*ofGetWidth(), 10);
+            }else{
+                   ofDrawBitmapString(ofToString("wait for selection"),10,10);
             }
-
             ofPopMatrix();
             // ofDrawBitmapStringHighlight("Selectionner un film", ofGetWidth()/2, ofGetHeight()/2);
         }
@@ -228,9 +231,41 @@ void vidPlayer::drawMini(int w , int h){
 void vidPlayer::play(){
     
     if(playlistIndex>= 0 && playlist.size()>0){
+
+        string name = playlist[playlistIndex].path;
+
+        #     ifdef RADIOLOGIC_OMX
+                ofxOMXPlayerSettings settings;
+                settings.videoPath = name;
+                settings.useHDMIForAudio = false;    //default true
+                settings.enableTexture = true;        //default true
+                settings.enableLooping = true;        //default true
+                settings.enableAudio = true;        //default true, save resources by disabling
+                player.setup(settings);
+                isLoaded = player.getIsOpen();
+        #     else
+                player.load(name);
+                isLoaded = player.isLoaded();
+        #     endif
+                
+                if( isLoaded){
+                    error-> setCurrentInfo("vidPlayer : SelectIndex: "+ofToString(playlistIndex));
+                    calculateGeometry();
+                    string csvName = (ofSplitString(name, "."))[0]+".csv";
+                    time.loadFile(csvName);
+                    isPlaying = true;
+                    oscsender->send("/playIndex", playlistIndex);
+                    
+                } else {
+                    // if not loaded
+                    error->setCurrentError("vidPlayer : playIndex : error Loading file");
+                }
         
-        playIndex(playlistIndex);
         
+        
+    }else{
+        // Index out of range
+        error->setCurrentError("vidPlayer : playIndex : index out of range");
     }
     
     
@@ -459,67 +494,32 @@ void vidPlayer::goNext(){
     
     
 }
-
+//------------------------------------------------------
+//PLAYLIST -  SELECT INDEX
+// Select on playlist and wait for play ---
+//------------------------------------------------------
+void vidPlayer::selectIndex(int i){
+    
+    if( i < playlist.size() && i >= 0){
+            
+        
+        playlistIndex = i;
+                    
+    }else{
+        // Index out of range
+        error->setCurrentError("vidPlayer : playIndex : index out of range");
+    }
+    
+}
 
 //------------------------------------------------------
 //PLAYLIST -  PLAY INDEX
-// play the movie here ---
+// Select then play directly
 //------------------------------------------------------
 void vidPlayer::playIndex(int i){
     
-    if( i < playlist.size() && i >= 0){
-        
-        string name = playlist[i].path;
-
-#     ifdef RADIOLOGIC_OMX
-        ofxOMXPlayerSettings settings;
-        settings.videoPath = name;
-        settings.useHDMIForAudio = false;    //default true
-        settings.enableTexture = true;        //default true
-        settings.enableLooping = true;        //default true
-        settings.enableAudio = true;        //default true, save resources by disabling
-        player.setup(settings);
-        isLoaded = player.getIsOpen();
-#     else
-        player.load(name);
-        isLoaded = player.isLoaded();
-#     endif
-        
-        if( isLoaded){
-            error-> setCurrentInfo("vidPlayer : playIndex: "+ofToString(playlistIndex));
-            calculateGeometry();
-            string csvName = (ofSplitString(name, "."))[0]+".csv";
-            time.loadFile(csvName);
-            isPlaying = true;
-            playlistIndex = i;
-            oscsender->send("/playIndex", i);
-#			ifdef RADIOLOGIC_OMX
-				player.start();
-				player.disableLooping();
-            
-#			else
-				player.setPixelFormat(OF_PIXELS_NATIVE);
-				player.play();
-				// But player.isPlaying() == false on windows
-				// player.isPlaying can't be trusty : use isPlaying instead
-				player.setLoopState(OF_LOOP_NONE);
-
-
-
-
-            
-#       endif
-            
-        } else {
-            // if not loaded
-			error->setCurrentError("vidPlayer : playIndex : error Loading file");
-        }
-        
-    }else{
-        // Index out of range
-		error->setCurrentError("vidPlayer : playIndex : index out of range");
-    }
-
+    selectIndex(i);
+    play();
     
 }
 

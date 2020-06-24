@@ -47,6 +47,9 @@ class ofApp : public ofBaseApp{
         } videoState;
         videoState notifiedVideoClientState;
     
+        //load the first file when USB is inserted
+        bool readFirstFileAtStart;
+    
         //USE OF USB KEY
         //Extra image
         ofImage imgNoUsbKey;
