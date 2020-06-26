@@ -66,6 +66,11 @@ void vidPlayer::init(){
     //IMAGES
     readyToPlay.load("readytoplay.png");
     
+    //VOLUME
+    currentVolume = 1;
+    setVolume(currentVolume);
+
+    
 }
 
 
@@ -366,19 +371,43 @@ void vidPlayer::setMinBrightness(int percentage){
 
 //------------------------------------------------------
 //PLAYING - SET VOLUMES
-// set volume of a movie . What are the bound ??? 1 , 10 ,100 ??
+// set volume of a movie . What are the bound : 0 to 5 ? ( need to be sur about it )
 //------------------------------------------------------
 void vidPlayer::setVolume(float v){
+    
+    currentVolume = v;
     
 #ifdef RADIOLOGIC_OMX
     if( player.getIsOpen() )
     {
-        player.setVolume(v);
+        player.setVolume(currentVolume);
     }
 #else
     if(player.isLoaded())
     {
-        player.setVolume(v);
+        player.setVolume(currentVolume);
+    }
+#endif
+    
+}
+
+//------------------------------------------------------
+//PLAYING - REDUCE VOLUME
+// reduce temporarly the current volume in percentage
+//------------------------------------------------------
+void vidPlayer::reduceVolumePercentage(float percent){
+    
+    float temporaryVolume = currentVolume*percent/100.0f;
+    
+#ifdef RADIOLOGIC_OMX
+    if( player.getIsOpen() )
+    {
+        player.setVolume(temporaryVolume);
+    }
+#else
+    if(player.isLoaded())
+    {
+        player.setVolume(temporaryVolume);
     }
 #endif
     

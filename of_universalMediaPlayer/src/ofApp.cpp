@@ -15,7 +15,9 @@ Playdirectly once the playlist is done
 void ofApp::setup(){
   
 
-    notifiedVideoClientState = STOPPED;
+    
+    
+    //CREATE INSTANCE
     error = errorManager();
     video = new vidPlayer(&error);
     video->init();
@@ -30,8 +32,15 @@ void ofApp::setup(){
     
     //HIDE CURSOR
     ofHideCursor();
+    
+    // SEND MESSAGE AVERAGE COLOR
+    // todo : bit ugly
     averageOSCSendIntervalMs = 100;
     lastAverageOSCSendTime = 0;
+    
+    // NOTIFY WHEN VIDEO CHANGE : PLAY OR STOP
+    // todo : change it
+    notifiedVideoClientState = STOPPED;
     
     //USB KEY
     /*
@@ -143,9 +152,10 @@ void ofApp::draw(){
     }
     
     //DRAW VIDEO
-    //float darkPercentage = message.getAlpha()/255.0f * 100;
-    float darkPercentage = 0;
+    // todo : video should not be reduced by message Class, but message Class should draw grey backgound instead
+    float darkPercentage = message.getAlpha()/255.0f * 100;
     video->draw(darkPercentage);
+    video->reduceVolumePercentage(100-darkPercentage);
     
     // DRAW IMAGE OF USB KEY
     if( usbKeyUse && video->getSize()==0){

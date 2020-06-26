@@ -44,7 +44,9 @@ public :
     void resume();
     void setMinBrightness(int p);
     void setVolume(float p);
+    void reduceVolumePercentage(float percent);
     bool autoNext;      // Go to the next movie automagically
+    float currentVolume;
     
     //PLAYING FUNCTION
     void loadFile(string file);
