@@ -11,6 +11,7 @@
 # general
 #########
 
+Makefile
 */[Bb]uild/
 */[Oo]bj/
 *.o
