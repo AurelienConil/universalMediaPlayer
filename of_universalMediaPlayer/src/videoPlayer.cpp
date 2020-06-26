@@ -562,7 +562,7 @@ int vidPlayer::getCurrentIndex(){
 }
 
 //------------------------------------------------------
-//PLAYLIST - GET SIZE
+//PLAYLIST - GET SIZE OF PLAYLIST
 //------------------------------------------------------
 int vidPlayer::getSize(){
     
