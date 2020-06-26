@@ -1,7 +1,10 @@
 listOfMovie = [];
+var hostIp = self.location.host
+var wsHostIp = "ws://" + hostIp.split(':')[0] + ":8082"
+console.log("host ip is : " + wsHostIp)
 
 var port = new osc.WebSocketPort({
-  url: "ws://localhost:8082"
+  url: wsHostIp
 });
 
 port.on("ready", function () {

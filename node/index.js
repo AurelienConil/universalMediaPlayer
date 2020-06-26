@@ -10,7 +10,7 @@ const serveIndex = require('serve-index');
 app.use('/', express.static('public'))
 app.use('/', serveIndex('public'))
 
-app.listen(3001, () => console.log('Server OPEN on port 3001!'));
+app.listen(3001, () => console.log('Server OPEN on port 3001'));
 
 
 //--------------------------------------------------
