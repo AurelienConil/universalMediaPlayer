@@ -192,6 +192,10 @@ void ofApp::keyPressed(int key){
             break;
         case ' ': video->play();
         break;
+        case '1': video->selectIndex(1);
+        break;
+        case '0': video->selectIndex(0);
+        break;
 		default:
 			ofSetFullscreen(false);
             
