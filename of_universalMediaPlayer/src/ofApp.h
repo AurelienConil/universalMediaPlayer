@@ -1,7 +1,7 @@
 #pragma once
 #include "PlatformConfig.h"
 #define OSC_PORT_RECEIVE 12343
-#define OSC_PORT_SEND 12345
+#define OSC_PORT_SEND 12344
 
 #include "ofMain.h"
 #include "videoPlayer.hpp"
