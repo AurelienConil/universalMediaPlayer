@@ -10,7 +10,7 @@ const serveIndex = require('serve-index');
 app.use('/', express.static('public'))
 app.use('/', serveIndex('public'))
 
-app.listen(3000, () => console.log('Server OPEN on port 3000!'));
+app.listen(3001, () => console.log('Server OPEN on port 3001!'));
 
 
 //--------------------------------------------------
@@ -41,9 +41,9 @@ var getIPAddresses = function () {
 
 var udp = new osc.UDPPort({
     localAddress: "0.0.0.0",
-    localPort: 7400,
+    localPort: 12342,
     remoteAddress: "127.0.0.1",
-    remotePort: 12345
+    remotePort: 12343
 });
 
 udp.on("ready", function () {
@@ -58,7 +58,7 @@ udp.on("ready", function () {
 udp.open();
 
 var wss = new WebSocket.Server({
-    port: 8081
+    port: 8082
 });
 
 wss.on("connection", function (socket) {

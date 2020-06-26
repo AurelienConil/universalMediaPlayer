@@ -1,7 +1,7 @@
 listOfMovie = [];
 
 var port = new osc.WebSocketPort({
-  url: "ws://localhost:8081"
+  url: "ws://localhost:8082"
 });
 
 port.on("ready", function () {
