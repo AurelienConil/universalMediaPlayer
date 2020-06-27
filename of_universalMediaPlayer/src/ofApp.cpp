@@ -51,7 +51,7 @@ void ofApp::setup(){
     usbKeyUse = true;
     usbKeyInserted = false;
     //IMAGE
-    imgNoUsbKey.load("usbstick.png");
+    imgNoUsbKey.load("nousbstick.png");
     imgNoFile.load("nofile.png");
     
     
@@ -158,14 +158,13 @@ void ofApp::draw(){
     video->reduceVolumePercentage(100-darkPercentage);
     
     // DRAW IMAGE OF USB KEY
-    if( usbKeyUse && video->getSize()==0){
-        if(!usbKeyInserted){
-            imgNoUsbKey.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.6);
-        }
-        else{
-            imgNoFile.draw((ofGetWidth()-imgNoUsbKey.getWidth())/2, ofGetHeight()*0.6);
-        }
+    if( usbKeyUse && !usbKeyInserted){
+            imgNoUsbKey.draw(20, 20);
     }
+    if(usbKeyUse && usbKeyInserted && video->getSize()==0){
+            imgNoFile.draw(20, 20);
+        }
+    
    
 
     

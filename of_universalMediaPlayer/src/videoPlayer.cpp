@@ -65,6 +65,7 @@ void vidPlayer::init(){
     
     //IMAGES
     readyToPlay.load("readytoplay.png");
+    waitingForSelection.load("playlistready.png");
     
     //VOLUME
     currentVolume = 1;
@@ -157,12 +158,12 @@ void vidPlayer::draw( int darkPercentage){
             // Movie is probably stop
             ofPushMatrix();
             ofSetColor(255);
-            ofTranslate ( 30, ofGetHeight()-120);
-            int st = 0;
+            ofTranslate ( 0, 0);
             if(playlistIndex>=0 && playlistIndex<playlist.size()){
-                readyToPlay.draw(0.5*ofGetWidth(), 10);
-            }else{
-                   ofDrawBitmapString(ofToString("wait for selection"),10,10);
+                readyToPlay.draw(20, 20);
+            }
+            if(playlistIndex<0 && getSize()>0){
+                waitingForSelection.draw(20, 20);
             }
             ofPopMatrix();
             // ofDrawBitmapStringHighlight("Selectionner un film", ofGetWidth()/2, ofGetHeight()/2);

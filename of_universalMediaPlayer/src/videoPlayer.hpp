@@ -75,7 +75,8 @@ public :
     errorManager* error;
     
     //IMAGE PNG icon etc...
-     ofImage readyToPlay;
+    ofImage readyToPlay;
+    ofImage waitingForSelection;
     
     //TIMECODE
     int actualFrame;
