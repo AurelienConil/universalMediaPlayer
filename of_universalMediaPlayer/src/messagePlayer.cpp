@@ -72,7 +72,7 @@ void messagePlayer::setMessage(string message){
 }
 
 //------------------------------------------------
-void messagePlayer::setMessageWithCountdown(string message, int count){
+void messagePlayer::setMessageWithCountdown(string message, int count, int duration){
  
     //if message is empty => clear current  message
     if(message.size()>1){
@@ -81,6 +81,8 @@ void messagePlayer::setMessageWithCountdown(string message, int count){
         countdown = count;
         displayMsg = MSG_COUNTDOWN;
         currentCountdown = count;
+        messageDuration = duration;
+
     }else{
         clear();
     }
@@ -119,24 +121,27 @@ void messagePlayer::update(){
      */
     if(displayMsg == MSG_COUNTDOWN){
         
-        //1st part : update countdown
-        if((ofGetElapsedTimef() - timeMessageReceived) < countdown){
-            currentCountdown = std::floor(countdown - ( ofGetElapsedTimef() - timeMessageReceived ));
-            alpha = 255;
-        }
-        else{
-            //2nd part : update msg displayed
-            float timeOnMessageDisplayed = timeMessageReceived + countdown;
-            //2nd part : update msg displayed
-            if(timeMessageClear <= 0){
+        //1st part : fade in message normally
+        if((ofGetElapsedTimef() - timeMessageReceived) < fadeInDuration){
+
+                float percentage = (ofGetElapsedTimef() - timeMessageReceived)/fadeInDuration;
+                alpha = 255*percentage;
+        }else
+        {
+            
+            float timeOnMessageDisplayed = ofGetElapsedTimef() - ( timeMessageReceived + fadeInDuration);
+            //2nd part : display message during messageDuration
+            if(timeOnMessageDisplayed <= messageDuration){
                 alpha = 255;
             }
-            //3nd part : fade out msg displayed
+            //3nd part : display count down
             else{
-                float timeFromFade = ofGetElapsedTimef() - timeMessageClear;
-                float percentage = 1.0 - (timeFromFade/fadeOutDuration);
-                alpha = 255*percentage;
-                if(alpha <= 0){
+                
+                currentCountdown = std::floor(countdown - ((timeOnMessageDisplayed - messageDuration) ));
+
+                alpha = 255;
+                if(currentCountdown < 0){
+                    alpha = 0;
                     displayMsg = 0;
                     currentMsg = "";
                 }
@@ -287,11 +292,11 @@ void messagePlayer::drawUnderlinedMsg(string msgToPrint){
 void messagePlayer::drawCountdownMsg(){
     if(alpha > 0){
     
-        if(currentCountdown> 0){
-            drawAutoSizedMsg(ofToString(currentCountdown));
-            drawUnderlinedMsg( "avant "+currentMsg);
-        }else{
+        if(currentCountdown>= countdown){
             drawAutoSizedMsg(currentMsg);
+            drawUnderlinedMsg( "pendant "+ofToString(countdown)+ " sec");
+        }else{
+            drawAutoSizedMsg(ofToString(currentCountdown));
         }
         
     }

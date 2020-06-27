@@ -24,7 +24,7 @@ public:
     void setFadeTime(int millis );
     void setFont(string f);
     void setMessage(string message);
-    void setMessageWithCountdown(string message, int count);
+    void setMessageWithCountdown(string message, int count, int duration);
     void setSize(int size);
     void setFadeIn(int duration);
     void setFadeOut(int duration);

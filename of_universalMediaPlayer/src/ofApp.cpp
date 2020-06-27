@@ -382,15 +382,46 @@ void ofApp::processOscMessage(ofxOscMessage m){
             
             // NEW MESSAGE
             if(splitted[1] == "message"){
-                string value = m.getArgAsString(0);
-                message.setMessage(value );
-                toPrint += "message";
+                string value;
+                int countdown;
+                int duration;
+                switch (m.getNumArgs()) {
+                    case 1:
+                        value = m.getArgAsString(0);
+                        message.setMessage(value );
+                        toPrint += "message";
+                        break;
+                    case 2:
+                        value = m.getArgAsString(0);
+                        countdown = m.getArgAsInt(1);
+                        message.setMessageWithCountdown(value, countdown, 2);
+                        break;
+                    case 3:
+                    value = m.getArgAsString(0);
+                    countdown = m.getArgAsInt(1);
+                    duration = m.getArgAsInt(2);
+                    message.setMessageWithCountdown(value, countdown, duration);
+                    break;
+                    default:
+                        value = m.getArgAsString(0);
+                        message.setMessage(value );
+                        toPrint += "message";
+                        break;
+                }
+                
             }
             if(splitted[1] == "countdown"){
-                string value = m.getArgAsString(0);
-                int count = m.getArgAsInt(1);
-                message.setMessageWithCountdown(value, count);
-                toPrint += "message";
+                if(m.getNumArgs()> 2){
+                    string value = m.getArgAsString(0);
+                    int countdown = m.getArgAsInt(1);
+                    int duration = m.getArgAsInt(2);
+                    message.setMessageWithCountdown(value, countdown, duration);
+                    toPrint += "message-countdown";
+                }else{
+                    error.setCurrentError("Bad argument number for message countdown 3 required");
+                }
+                
+                
             }
             if(splitted[1] == "clear"){
                 message.clear();
