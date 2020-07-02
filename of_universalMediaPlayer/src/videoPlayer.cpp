@@ -472,7 +472,7 @@ int vidPlayer::addFile(string f){
         
         file.open(f);
         //CHECK IF EXTENSION IS CORRECT
-        if( file.getExtension() == "mov" || file.getExtension() == "mp4" || file.getExtension() == "MOV" ){
+        if( file.getExtension() == "mov" || file.getExtension() == "mp4" || file.getExtension() == "MOV" || file.getExtension() == "avi" || file.getExtension() == "mkv"  ){
             
             //CHECK THAT FILE IS NOT ALREAY ADDED
             int alreadyAdded = -1;
