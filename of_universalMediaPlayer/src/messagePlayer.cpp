@@ -131,7 +131,7 @@ void messagePlayer::update(){
             
             float timeOnMessageDisplayed = ofGetElapsedTimef() - ( timeMessageReceived + fadeInDuration);
             //2nd part : display message during messageDuration
-            if(timeOnMessageDisplayed <= messageDuration){
+             if(timeOnMessageDisplayed <= messageDuration || (messageDuration==0 && countdown==0)){
                 alpha = 255;
             }
             //3nd part : display count down
@@ -294,8 +294,10 @@ void messagePlayer::drawCountdownMsg(){
     
         if(currentCountdown>= countdown){
             drawAutoSizedMsg(currentMsg);
+            if(countdown>0){
             drawUnderlinedMsg( "pendant "+ofToString(countdown)+ " sec");
-        }else{
+            ]
+        }else if(countdown>0){
             drawAutoSizedMsg(ofToString(currentCountdown));
         }
         
