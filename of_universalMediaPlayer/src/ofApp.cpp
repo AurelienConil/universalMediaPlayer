@@ -544,6 +544,8 @@ void ofApp::scanVideoFiles(){
 			folderKey.allowExt("mp4");
 			folderKey.allowExt("mov");
 			folderKey.allowExt("MOV");
+            folderKey.allowExt("avi");
+            folderKey.allowExt("mkv");
 			folderKey.listDir();
 			for (int i = 0; i < folderKey.listDir(); i++) {
 				cout << "FILE : " + folderKey.getPath(i) + "\n";
