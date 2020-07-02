@@ -296,9 +296,9 @@ void messagePlayer::drawCountdownMsg(){
             drawAutoSizedMsg(currentMsg);
             if(countdown>0){
             drawUnderlinedMsg( "pendant "+ofToString(countdown)+ " sec");
-            ]
+            }
         }else if(countdown>0){
-            drawAutoSizedMsg(ofToString(currentCountdown));
+            drawAutoSizedMsg(ofToString(currentCountdown+1));
         }
         
     }
