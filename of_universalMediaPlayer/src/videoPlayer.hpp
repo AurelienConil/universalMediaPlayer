@@ -65,6 +65,7 @@ public :
 	void sendOSCPlaylist();
 	void clearPlaylist();
     
+    
     //GEOMETRY
     void calculateGeometry();
     
@@ -84,6 +85,11 @@ public :
 
 	//OSC SENDER
 	oscSender* oscsender;
+    
+    //VIGNETTE MANAGEMENT
+    void addVignetteToWebApp(string moviePath, int index);
+    void clearAllVignette();
+    string vignetteFolderPath;
     
     
     //PRINT EXTRA STUFF

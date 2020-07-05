@@ -26,7 +26,7 @@ port.on("message", function (oscMessage) {
 
   switch (oscMessage.address) {
     case "/addMovie":
-      console.log("message recu", oscMessage);
+      console.log("message recu addMovie", oscMessage);
       var movie = createMovie(oscMessage.args);
       listOfMovie.push(movie);
       $("#list").append(htmlDivElement(movie));
@@ -34,7 +34,7 @@ port.on("message", function (oscMessage) {
 
       break;
     case "/playIndex":
-      console.log("message recu", oscMessage);
+      console.log("message recu play Index", oscMessage);
       var idName = "#card" + String(oscMessage.args[0]);
       $("#list").children().each(function (index) {
         $(this).removeClass("bg-dark text-light");
@@ -60,7 +60,7 @@ var sendOscMessage = function (oscAddress, arg) {
     args: [arg]
   });
 
-  console.log("message envoyé");
+  console.log("message OSC envoyé");
 };
 
 
@@ -80,13 +80,13 @@ function htmlDivElement(movie) {
 
   var html = "";
   html = "<div class='card divFilm my-3 mx-2' style='width: 90%;' id='card" + String(movie.index) + "'>";
-  //html += "<img src='...' class='card-img-top' alt='...'></img>";
+  html += "<img src='vignette/" + movie.index + ".jpg' class='vignette' alt='...'></img>";
   html += "<div class='card-body'>"
   html += "  <h5 class='card-title'>"
   html += movie.name;
   html += "</h5>"
   html += "<button class='btn btn-primary' id='movie" + String(movie.index) + "' >";
-  html += "play";
+  html += "lecture";
   html += "</button>";
   html += "</div>";
 

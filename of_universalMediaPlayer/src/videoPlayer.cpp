@@ -70,6 +70,10 @@ void vidPlayer::init(){
     //VOLUME
     currentVolume = 1;
     setVolume(currentVolume);
+    
+    //VIGNETTE
+    vignetteFolderPath = "../../../node/public/vignette";
+    clearAllVignette();
 
     
 }
@@ -486,9 +490,11 @@ int vidPlayer::addFile(string f){
             }else{
 				string name = file.getFileName();
 
-				movie newMov = movie(name, playlist.size(), f);
-				
+                int movieIndex = playlist.size();
+				movie newMov = movie(name, movieIndex, f);
 				playlist.push_back(newMov);
+                
+                addVignetteToWebApp(f, movieIndex);
                 error-> setCurrentInfo("vidPlayer :addFile: "+f+" nb of file : "+ofToString(playlist.size()));
                 return (playlist.size() - 1);
             }
@@ -673,5 +679,47 @@ void vidPlayer::calculateGeometry(){
         playerW = originalPlayerW;
     }
     
+    
+}
+
+//------------------------------------------------------
+//VIGNETTE  - ADD VIGNETTE TO WEBAPP
+// look for a jpg file next to the movie file, then copy it to webapp
+//------------------------------------------------------
+void vidPlayer::addVignetteToWebApp(string moviePath, int index){
+    
+    ofFile file;
+    string vignetteFilePath = ofSplitString(moviePath, ".")[0]+".jpg";
+     if(file.doesFileExist(vignetteFilePath) ){
+         file.open(vignetteFilePath);
+         cout << "vignette Path is : "+vignetteFilePath;
+         file.copyTo(vignetteFolderPath+"/"+ofToString(index)+".jpg");
+         
+     }else{
+         //if there is no vignette , copy the default vignette to vignette folder path
+         ofFile defaultVignette;
+         defaultVignette.open("defaultvignette.jpg");
+         defaultVignette.copyTo(vignetteFolderPath+"/"+ofToString(index)+".jpg");
+         
+     }
+    
+}
+
+//------------------------------------------------------
+//VIGNETTE  - CLEAR ALL VIGNETTE
+// look for a jpg file into web app vignette folder and delete them
+//------------------------------------------------------
+void vidPlayer::clearAllVignette(){
+    
+    ofDirectory dir;
+    dir.open(vignetteFolderPath);
+    if(dir.isDirectory() ){
+        if(dir.listDir()>0){
+            std::vector<ofFile> listOfFiles = dir.getFiles();
+            for(std::vector<ofFile>::iterator it = listOfFiles.begin(); it < listOfFiles.end(); it++ ){
+                it->remove();
+            }
+        }
+    }
     
 }

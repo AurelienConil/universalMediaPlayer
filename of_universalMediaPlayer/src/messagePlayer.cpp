@@ -116,7 +116,7 @@ void messagePlayer::update(){
     //UPDATE COUNTDOWN
     /*
      DisplayCountdown = display Msg with countdown
-     Using this method, fadeInDuration in not taken into account
+     Using this method, fadeOutDuration in not taken into account
      only a count down, written directly on screen
      */
     if(displayMsg == MSG_COUNTDOWN){
@@ -131,6 +131,7 @@ void messagePlayer::update(){
             
             float timeOnMessageDisplayed = ofGetElapsedTimef() - ( timeMessageReceived + fadeInDuration);
             //2nd part : display message during messageDuration
+            // TODO . if alpha = 255, messageOnScreen is ON, volume is down ... etc
              if(timeOnMessageDisplayed <= messageDuration || (messageDuration==0 && countdown==0)){
                 alpha = 255;
             }
