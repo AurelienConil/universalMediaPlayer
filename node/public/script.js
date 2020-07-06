@@ -86,7 +86,7 @@ function htmlDivElement(movie) {
   html += movie.name;
   html += "</h5>"
   html += "<button class='btn btn-primary' id='movie" + String(movie.index) + "' >";
-  html += "lecture";
+  html += "Lecture";
   html += "</button>";
   html += "</div>";
 
