@@ -91,6 +91,23 @@ void messagePlayer::setMessageWithCountdown(string message, int count, int durat
 }
 
 //------------------------------------------------
+void messagePlayer::setMessageWithDuration(string message, int duration){
+ 
+    //if message is empty => clear current  message
+    if(message.size()>1){
+        currentMsg = message;
+        setMessage(message);
+        displayMsg = MSG_DURATION;
+        messageDuration = duration;
+
+    }else{
+        clear();
+    }
+    
+       
+}
+
+//------------------------------------------------
 void messagePlayer::clear(){
     
     if(getDisplay()){
@@ -102,7 +119,7 @@ void messagePlayer::clear(){
         
         
     }else{
-        //SEND ERROR ... already clearing
+        //SEND ERROR ... already clear
         
     }
 
@@ -152,6 +169,35 @@ void messagePlayer::update(){
         }
     }
     
+    if(displayMsg == MSG_DURATION){
+        
+        //1st part : update fadein
+        if((ofGetElapsedTimef() - timeMessageReceived) < fadeInDuration){
+
+                float percentage = (ofGetElapsedTimef() - timeMessageReceived)/fadeInDuration;
+                alpha = 255*percentage;
+        }
+        else{
+            float timeOnMessageDisplayed = ofGetElapsedTimef() - (timeMessageReceived + fadeInDuration);
+            //2nd part : update msg displayed
+            if(timeOnMessageDisplayed < messageDuration ){
+                alpha = 255;
+            }
+            //3nd part : fade out msg displayed
+            else{
+                float timeFromFade = timeOnMessageDisplayed - messageDuration;
+                float percentage = 1.0 - (timeFromFade/fadeOutDuration);
+                alpha = 255*percentage;
+                if(alpha <= 0){
+                    displayMsg = 0;
+                    currentMsg = "";
+                }
+            }
+            
+            
+        }
+    }
+    
     if(displayMsg == MSG_CLASSIC){
         
         //1st part : update fadein
@@ -187,6 +233,9 @@ void messagePlayer::update(){
 void messagePlayer::draw(){
         
     if(displayMsg== MSG_CLASSIC){
+        drawAutoSizedMsg(currentMsg);
+    }
+    if(displayMsg== MSG_DURATION){
         drawAutoSizedMsg(currentMsg);
     }
     if(displayMsg == MSG_COUNTDOWN){

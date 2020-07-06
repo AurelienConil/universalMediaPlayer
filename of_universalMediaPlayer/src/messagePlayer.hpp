@@ -14,6 +14,7 @@
 
 #define MSG_CLASSIC ( 1)
 #define MSG_COUNTDOWN ( 2)
+#define MSG_DURATION ( 3)
 
 class messagePlayer{
     
@@ -25,6 +26,7 @@ public:
     void setFont(string f);
     void setMessage(string message);
     void setMessageWithCountdown(string message, int count, int duration);
+    void setMessageWithDuration(string message, int duration);
     void setSize(int size);
     void setFadeIn(int duration);
     void setFadeOut(int duration);

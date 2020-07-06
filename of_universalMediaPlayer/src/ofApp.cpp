@@ -399,7 +399,16 @@ void ofApp::processOscMessage(ofxOscMessage m){
                     value = m.getArgAsString(0);
                     countdown = m.getArgAsInt(1);
                     duration = m.getArgAsInt(2);
-                    message.setMessageWithCountdown(value, countdown, duration);
+                        if(countdown<1){
+                            if(duration<1){
+                                message.setMessage(value);
+                            }else{
+                                message.setMessageWithDuration(value, duration);
+                            }
+                        }else{
+                            message.setMessageWithCountdown(value, countdown, duration);
+                        }
+                    
                     break;
                     default:
                         value = m.getArgAsString(0);

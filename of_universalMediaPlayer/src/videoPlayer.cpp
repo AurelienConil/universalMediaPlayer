@@ -685,6 +685,7 @@ void vidPlayer::calculateGeometry(){
 //------------------------------------------------------
 //VIGNETTE  - ADD VIGNETTE TO WEBAPP
 // look for a jpg file next to the movie file, then copy it to webapp
+// Vignette 180 avec 3 colonnes : vignette, titre, et bouton play
 //------------------------------------------------------
 void vidPlayer::addVignetteToWebApp(string moviePath, int index){
     
