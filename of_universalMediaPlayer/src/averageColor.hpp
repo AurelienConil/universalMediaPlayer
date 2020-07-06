@@ -15,6 +15,7 @@ class averageColor{
     
     public :
     averageColor();
+    averageColor(bool _isActivated);
     void fboBegin();
     void fboEnd();
     void calculate();

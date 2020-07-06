@@ -35,6 +35,7 @@ void ofApp::setup(){
     
     // SEND MESSAGE AVERAGE COLOR
     // todo : bit ugly
+    average = averageColor(true);
     averageOSCSendIntervalMs = 100;
     lastAverageOSCSendTime = 0;
     
@@ -137,7 +138,7 @@ void ofApp::draw(){
     ofBackground(0);
     
     //DRAW VIDEO IN AVERAGE COLOR, CALCULATE, SEND OVER OSC
-    if(average.isActivated ){
+    if(average.isActivated && video->getIsPlaying() ){
         average.fboBegin();
         ofSetColor(255);
         video->drawMini(AVERAGE_SIZE, AVERAGE_SIZE);

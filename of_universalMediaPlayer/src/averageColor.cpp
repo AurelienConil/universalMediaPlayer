@@ -27,6 +27,24 @@ averageColor::averageColor(){
 }
 
 //------------------------------------------------------
+averageColor::averageColor(bool _isActivated){
+    
+    averageFbo.allocate(AVERAGE_SIZE, AVERAGE_SIZE);
+    smoothColor = ofColor(127);
+    finalR = 0;
+    finalG = 0;
+    finalB = 0;
+    smoothR = 0;
+    smoothG = 0;
+    smoothB = 0;
+    
+    colorSmooth = 0.035;
+    
+    isActivated = _isActivated;
+    isDraw = false;
+}
+
+//------------------------------------------------------
 void averageColor::fboBegin(){
     
     averageFbo.begin();
