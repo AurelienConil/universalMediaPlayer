@@ -1,0 +1,23 @@
+{
+  "short_name": "Film",
+  "name": "Radiologic Film",
+  "theme_color": "#eb5252",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "Scope": "/",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/icon-64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "images/icon-128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    }
+    
+  ],
+  "start_url": "."
+}

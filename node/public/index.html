@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -13,20 +14,27 @@
     <div class="container-fluid p-1  bg-dark text-white">
         <div class="container mt-2">
             <div class="row">
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-2 py-2">
+                    <button class="btn btn-success " id="playlistbutton">
+                        <span class="glyphicon glyphicon-plus"></span>actualiser</button>
+                </div>
+                <div class="col-sm-8 text-center">
                     <h1>Film</h1>
                 </div>
+                <div class="col-sm-2 ">
+
+                </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-2 ">
                     <button class="btn btn-success " id="playlistbutton">
                         <span class="glyphicon glyphicon-plus"></span>actualiser</button>
                 </div>
                 <div class="col-sm-10">
-                    <!-- <form><input type="range" id="timeline" class="form-control-range"></form> -->
+                    <form><input type="range" id="timeline" class="form-control-range"></form>
                     &ensp;
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -36,7 +44,7 @@
 
     <div id="main">
 
-        <div id="list">
+        <div id="list" class="px-3">
 
         </div>
 
