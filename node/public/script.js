@@ -79,7 +79,7 @@ $(document).ready(function () {
 function htmlDivElement(movie) {
 
   var html = "";
-  html = "<div class='container-md card divFilm my-3' id='card" + String(movie.index) + "'>";
+  html = "<div class='container-xl card divFilm my-3' id='card" + String(movie.index) + "'>";
   html += " <div class='row'>"
   html += "<div class='col-5 text-center'>"
   html += "<img src='vignette/" + movie.index + ".jpg' class='vignette' alt='...'></img>";
