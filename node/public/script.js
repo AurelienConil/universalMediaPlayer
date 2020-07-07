@@ -79,15 +79,19 @@ $(document).ready(function () {
 function htmlDivElement(movie) {
 
   var html = "";
-  html = "<div class='card divFilm my-3 mx-2' style='width: 90%;' id='card" + String(movie.index) + "'>";
+  html = "<div class='container card divFilm my-3 mx-2' style='width: 90%;' id='card" + String(movie.index) + "'>";
+  html += " <div class='row'>"
+  html += "<div class='col-5 text-center'>"
   html += "<img src='vignette/" + movie.index + ".jpg' class='vignette' alt='...'></img>";
-  html += "<div class='card-body'>"
+  html += "</div><div class='col-4 text-center py-5'>"
   html += "  <h5 class='card-title'>"
   html += movie.name;
-  html += "</h5>"
-  html += "<button class='btn btn-primary' id='movie" + String(movie.index) + "' >";
+  html += "</h5></div>"
+  html += "<div class='col-3 text-center py-5'>"
+  html += "<button class='btn btn-primary btn-lg' id='movie" + String(movie.index) + "' >";
   html += "Lecture";
   html += "</button>";
+  html += "</div>";
   html += "</div>";
 
   /*
