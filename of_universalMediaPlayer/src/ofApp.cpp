@@ -158,6 +158,7 @@ void ofApp::draw(){
     video->draw(darkPercentage);
     video->reduceVolumePercentage(100-darkPercentage);
     
+#if defined(USE_ICON)
     // DRAW IMAGE OF USB KEY
     if( usbKeyUse && !usbKeyInserted){
             imgNoUsbKey.draw(20, 20);
@@ -165,7 +166,7 @@ void ofApp::draw(){
     if(usbKeyUse && usbKeyInserted && video->getSize()==0){
             imgNoFile.draw(20, 20);
         }
-    
+#endif
    
 
     

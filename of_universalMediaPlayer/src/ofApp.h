@@ -2,6 +2,7 @@
 #include "PlatformConfig.h"
 #define OSC_PORT_RECEIVE 12343
 #define OSC_PORT_SEND 12344
+//#define USE_ICON 
 
 #include "ofMain.h"
 #include "videoPlayer.hpp"
