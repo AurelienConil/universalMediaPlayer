@@ -68,7 +68,7 @@ void vidPlayer::init(){
     waitingForSelection.load("playlistready.png");
     
     //VOLUME
-    currentVolume = 1;
+    currentVolume = 0.5;
     setVolume(currentVolume);
     
     //VIGNETTE
@@ -163,12 +163,15 @@ void vidPlayer::draw( int darkPercentage){
             ofPushMatrix();
             ofSetColor(255);
             ofTranslate ( 0, 0);
-            if(playlistIndex>=0 && playlistIndex<playlist.size()){
+            
+#ifdef USE_ICON
+            if(playlistIndex>=0 && playlistIndex<playlist.size() ){
                 readyToPlay.draw(20, 20);
             }
-            if(playlistIndex<0 && getSize()>0){
+            if(playlistIndex<0 && getSize()>0 ){
                 waitingForSelection.draw(20, 20);
             }
+#endif
             ofPopMatrix();
             // ofDrawBitmapStringHighlight("Selectionner un film", ofGetWidth()/2, ofGetHeight()/2);
         }
