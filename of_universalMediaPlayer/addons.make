@@ -1,3 +1,4 @@
 ofxCsv
-ofxOsc
+ofxGLWarper
 ofxOMXPlayer
+ofxOsc

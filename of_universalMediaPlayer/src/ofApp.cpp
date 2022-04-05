@@ -59,6 +59,11 @@ void ofApp::setup(){
     // Load the first file when usb key is inserted
     readFirstFileAtStart = false;
     
+    //WARPER
+    warper.setup(0, 0, ofGetWidth(), ofGetHeight());
+    warper.deactivate();
+    
+    
     
 }
 
@@ -152,12 +157,16 @@ void ofApp::draw(){
         }
     }
     
+    warper.begin();
     //DRAW VIDEO
     // todo : video should not be reduced by message Class, but message Class should draw grey backgound instead
+    //TODO : draw video inside glwarper. This glwarper should be modified from osc.
     float darkPercentage = message.getAlpha()/255.0f * 100;
     video->draw(darkPercentage);
     video->reduceVolumePercentage(100-darkPercentage);
+ 
     
+    //TODO : forget about USE=ICON as defined, but use JSON instead.
 #if defined(USE_ICON)
     // DRAW IMAGE OF USB KEY
     if( usbKeyUse && !usbKeyInserted){
@@ -181,6 +190,11 @@ void ofApp::draw(){
     //OF SET COLOR ... bug issue
     ofSetColor(255);
     
+    warper.end();
+    if (warper.isActive()) {
+        warper.draw();
+    }
+    
     // SHOW VERBOSE ONLY IF NECESSARY
     if(!error.isHidden)error.draw();
     
@@ -200,6 +214,8 @@ void ofApp::keyPressed(int key){
 		case 'f': ofSetFullscreen(true);
             break;
         case 't': video->time.doPrintTimeCode = !video->time.doPrintTimeCode;
+            break;
+        case 'w': warper.toggleActive();
             break;
         case ' ': video->play();
         break;
@@ -505,6 +521,29 @@ void ofApp::processOscMessage(ofxOscMessage m){
             }
             
         }
+        // ----------- AVERAGE COLOR----------------
+        else if(splitted[0] == "warper"){
+        
+            if(splitted[1] == "topleft"){
+                int x = m.getArgAsFloat(0)*ofGetWidth();
+                int y = m.getArgAsFloat(1)*ofGetHeight();
+                warper.setCorner(warper.TOP_LEFT, x, y);
+            } else if(splitted[1] == "topright"){
+                int x = m.getArgAsFloat(0)*ofGetWidth();
+                int y = m.getArgAsFloat(1)*ofGetHeight();
+                warper.setCorner(warper.TOP_RIGHT, x, y);
+            } else if(splitted[1] == "bottomleft"){
+                int x = m.getArgAsFloat(0)*ofGetWidth();
+                int y = m.getArgAsFloat(1)*ofGetHeight();
+                warper.setCorner(warper.BOTTOM_LEFT, x, y);
+            } else if(splitted[1] == "bottomright"){
+                int x = m.getArgAsFloat(0)*ofGetWidth();
+                int y = m.getArgAsFloat(1)*ofGetHeight();
+                warper.setCorner(warper.BOTTOM_RIGHT, x, y);
+            }
+            
+        }
+        
         
         error.setCurrentInfo(toPrint);
         

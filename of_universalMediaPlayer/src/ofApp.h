@@ -11,6 +11,12 @@
 #include "oscSender.hpp"
 #include "errorManager.hpp"
 #include "averageColor.hpp"
+#include "json.hpp"
+#include "ofParameter.h"
+#include "ofxGLWarper.h"
+
+// for convenience
+using ofJson = nlohmann::json;
 
 class ofApp : public ofBaseApp{
 
@@ -50,6 +56,10 @@ class ofApp : public ofBaseApp{
     
         //load the first file when USB is inserted
         bool readFirstFileAtStart;
+    
+        //QUAD WARPER
+        // Quad Warper
+        ofxGLWarper warper;
     
         //USE OF USB KEY
         //Extra image
