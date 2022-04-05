@@ -114,7 +114,7 @@ function createPlayCallback(movie) {
   $(buttonName).click(function () {
 
     console.log("lecture du film : " + String(movie.index) + " : " + movie.name);
-    sendOscMessage("/player/selectIndex", movie.index);
+    sendOscMessage("/player/playIndex", movie.index);
     //changer la chose pour que les films aient un indentifiant unique
     // qui ne soit pas basé sur l'index dans le tableau.
     $("#list").children().children("div").children("button").removeClass("btn-light");
